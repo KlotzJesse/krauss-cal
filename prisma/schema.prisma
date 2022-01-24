@@ -61,7 +61,7 @@ model EventType {
   schedulingType          SchedulingType?
   Schedule                Schedule[]
   price                   Int                    @default(0)
-  currency                String                 @default("usd")
+  currency                String                 @default("eur")
   slotInterval            Int?
 
   @@unique([userId, slug])
@@ -109,14 +109,14 @@ model User {
   password            String?
   bio                 String?
   avatar              String?
-  timeZone            String               @default("Europe/London")
+  timeZone            String               @default("Europe/Berlin")
   weekStart           String               @default("Sunday")
   // DEPRECATED - TO BE REMOVED
   startTime           Int                  @default(0)
   endTime             Int                  @default(1440)
   // </DEPRECATED>
   bufferTime          Int                  @default(0)
-  hideBranding        Boolean              @default(false)
+  hideBranding        Boolean              @default(true)
   theme               String?
   createdDate         DateTime             @default(now()) @map(name: "created")
   eventTypes          EventType[]          @relation("user_eventtype")
@@ -132,10 +132,10 @@ model User {
   identityProvider    IdentityProvider     @default(CAL)
   identityProviderId  String?
   invitedTo           Int?
-  plan                UserPlan             @default(TRIAL)
+  plan                UserPlan             @default(PRO)
   Schedule            Schedule[]
   webhooks            Webhook[]
-  brandColor          String               @default("#292929")
+  brandColor          String               @default("#009def")
   // the location where the events will end up
   destinationCalendar DestinationCalendar?
   away                Boolean              @default(false)
@@ -215,7 +215,7 @@ model DailyEventReference {
   dailyurl   String   @default("dailycallurl")
   dailytoken String   @default("dailytoken")
   booking    Booking? @relation(fields: [bookingId], references: [id])
-  bookingId  Int?
+  bookingId  Int?     @unique
 }
 
 model Booking {
